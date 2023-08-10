@@ -1,0 +1,354 @@
+---
+title: "Bella beat Analysis"
+author: "Maryam Sanni"
+format: html
+editor: visual
+theme: cosmo
+---
+
+Introduction
+
+Bellabeat is a a high-tech manufacturer of health-focused products for women, and meet different characters and team members
+
+bellabeat logo
+
+<hr>
+
+bellabeat offers four products:
+
+Bellabeat app: An app that provides the users with health data related to their activity, sleep, stress, menstrual cycle, and mindfulness habits. This data can help users better understand their current habits and make healthy decisions. The Bellabeat app connects to their line of smart wellness products.
+
+Leaf: Bellabeat's classic wellness tracker can be worn as a bracelet, necklace, or clip. The Leaf tracker connects to the Bellabeat app to track activity, sleep, and stress.
+
+Time: This wellness watch combines the timeless look of a classic timepiece with smart technology to track user activity, sleep, and stress. The Time watch connects to the Bellabeat app to provide you with insights into your daily wellness.
+
+Spring: This is a water bottle that tracks daily water intake using smart technology to ensure that you are appropriately hydrated throughout the day. The Spring bottle connects to the Bellabeat app to track your hydration levels.
+
+Bellabeat membership: Bellabeat also offers a subscription-based membership program for users. Membership gives users 24/7 access to fully personalized guidance on nutrition, activity, sleep, health and beauty, and mindfulness based on their lifestyle and goals.
+
+Problem statement
+
+The aim of this analysis is to analyse smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices.
+
+The questions this analysis answers are:
+
+What are some trends in smart device usage? +
+
+How could these trends apply to Bellabeat customers? +
+
+How could these trends help influence Bellabeat marketing strategy?
+
+Data sourcing and preparation
+
+For this project, a public data from kaggle containing personal fitness tracker from thirty fitbit users who have consented to the submission and use of their personal tracker data.
+
+The data is stored on my computer folder. The data is in a long format which is compatible with the r tool that i am using for this analysis and because it follows the tidy data principles
+
+For this project, i used r for data wrangling and visualization. i also used quarto to create the report.
+
+To maintain data integrity, I ensure that each column of the datasets are consistent and confirm to oredefined rules such as data format and types.
+
+Data Validation and Cleaning
+
+In cleaning the data, u ensured i removed missing values, outliers, duplicares and inconsistent formatting. I used the dplyr and tidyr packages from r
+
+{r echo=TRUE, results='hide'}
+library(tidyr)
+library(dplyr)
+library(lubridate)
+
+I imported the data using read_csv function for all the dataset were stored in csv format
+
+{r echo=FALSE}
+#read.csv()
+
+{r include=FALSE}
+#load datasets
+dailyActivity_merged <- as.data.frame(read.csv("./clean_dataset/dailyActivity_merged.csv"))
+dailyintensities_merged <- as.data.frame(read.csv("./clean_dataset/dailyintensities_merged.csv"))
+dailySteps_merged <- as.data.frame(read.csv("./clean_dataset/dailySteps_merged.csv"))
+heartrate_seconds_merged <- as.data.frame(read.csv("./clean_dataset/heartrate_seconds_merged.csv"))
+hourlyCalories_merged <- as.data.frame(read.csv("./clean_dataset/hourlyCalories_merged.csv"))
+hourlyIntensities_merged <- as.data.frame(read.csv("./clean_dataset/hourlyIntensities_merged.csv"))
+hourlySteps_merged <- as.data.frame(read.csv("./clean_dataset/hourlySteps_merged.csv"))
+minuteCaloriesNarrow_merged <- as.data.frame(read.csv("./clean_dataset/minuteCaloriesNarrow_merged.csv"))
+minuteMETsNarrow_merged <- as.data.frame(read.csv("./clean_dataset/minuteMETsNarrow_merged.csv"))
+minuteSleep_merged <- as.data.frame(read.csv("./clean_dataset/minuteSleep_merged.csv"))
+minuteStepsNarrow_merged <- as.data.frame(read.csv("./clean_dataset/minuteStepsNarrow_merged.csv"))
+sleepDay_merged <- as.data.frame(read.csv("./clean_dataset/sleepDay_merged.csv"))
+weightLogInfo_merged <- as.data.frame(read.csv("./clean_dataset/weightLogInfo_merged.csv"))
+
+Dataset description
+
+1. daily Activity merged
+
+{r}
+head(dailyActivity_merged)
+
+This dataset has 16 columns From the head of the first dataset, the date is in a character format and the id is in a double format it is necessary to change the Id to character and the ActivityDate to date
+
+{r echo=TRUE}
+dailyActivity_merged$ActivityDate <- ymd(dailyActivity_merged$ActivityDate)
+dailyActivity_merged$Id <- as.character(dailyActivity_merged$Id)
+
+In checkimg missing values and duplicates, I created functions that can be reused
+
+check for missing values
+
+{r}
+any_missing <- function(data){
+is_missing <- any(is.na(data))
+if (is_missing){
+  return("There is a missing value")
+} else {
+  return("There is no missing value")
+}}
+
+any_missing(dailyActivity_merged)
+
+check for duplicates
+
+Checked for duplicates in the dataset. I created a function that can be reused to = check for duplicates in the other dataset
+
+{r}
+any_duplicates <- function(dataset){
+ is_duplicates <- any(duplicated(dataset) | duplicated(dataset, fromLast = TRUE))
+
+if (is_duplicates) {
+  return ("There are duplicate rows in the data.")
+} else {
+  return("There are no duplicate rows in the data.")
+}}
+
+{r}
+any_duplicates(dailyActivity_merged)
+
+2. dailyintensities_merged
+
+{r}
+head(dailyintensities_merged)
+
+convert chr to date data type for Activity Day
+
+{r}
+dailyintensities_merged$ActivityDay<- ymd(dailyintensities_merged$ActivityDay)
+
+check for missing data
+
+{r}
+any_missing(dailyintensities_merged)
+any_duplicates(dailyintensities_merged)
+
+3. dailySteps_merged
+
+{r}
+head(dailySteps_merged)
+
+{r}
+dailySteps_merged$ActivityDay <- ymd(dailySteps_merged$ActivityDay)
+any_missing(dailySteps_merged)
+any_duplicates(dailySteps_merged)
+
+4. heartrate_seconds_merged
+
+{r}
+head(heartrate_seconds_merged)
+
+{r}
+heartrate_seconds_merged$Time <- ymd_hms(heartrate_seconds_merged$Time)
+any_missing(heartrate_seconds_merged)
+any_duplicates(heartrate_seconds_merged)
+
+5. hourlyCalories_merged
+
+{r}
+head(hourlyCalories_merged)
+
+{r}
+hourlyCalories_merged$ActivityHour <- ymd_hms(hourlyCalories_merged$ActivityHour)
+hourlyCalories_merged$Id <- as.character(hourlyCalories_merged$Id)
+any_missing(hourlyCalories_merged)
+any_duplicates(hourlyCalories_merged)
+
+6. hourlyIntensities_merged
+
+{r}
+head(hourlyIntensities_merged)
+
+{r}
+hourlyIntensities_merged$ActivityHour <- ymd_hms(hourlyIntensities_merged$ActivityHour)
+hourlyIntensities_merged$Id <- as.character(hourlyIntensities_merged$Id)
+any_missing(hourlyIntensities_merged)
+any_duplicates(hourlyIntensities_merged)
+
+7. hourlySteps_merged
+
+{r}
+head(hourlySteps_merged)
+
+{r}
+hourlySteps_merged$ActivityHour <- ymd_hms(hourlySteps_merged$ActivityHour)
+hourlySteps_merged$Id <- as.character(hourlySteps_merged$Id)
+any_missing(hourlySteps_merged)
+any_duplicates(hourlySteps_merged)
+
+8. minuteCaloriesNarrow_merged
+
+{r}
+head(minuteCaloriesNarrow_merged)
+
+{r}
+minuteCaloriesNarrow_merged$ActivityMinute <- ymd_hms(minuteCaloriesNarrow_merged$ActivityMinute)
+minuteCaloriesNarrow_merged$Id <- as.character(minuteCaloriesNarrow_merged$Id)
+any_missing(minuteCaloriesNarrow_merged)
+any_duplicates(minuteCaloriesNarrow_merged)
+
+There is a missing value found in the minuteCaloriesNarrow_merged data
+
+{r}
+#check the rows with missing values
+#rows_with_missing <- minuteCaloriesNarrow_merged[apply(is.na(data), 1, any), ]
+
+missing_rows <- minuteCaloriesNarrow_merged[!complete.cases(minuteCaloriesNarrow_merged),]
+print(missing_rows)
+
+Since its just one row missing, i will remove it
+
+{r}
+minuteCaloriesNarrow_merged <- minuteCaloriesNarrow_merged[complete.cases(minuteCaloriesNarrow_merged),]
+
+9. minuteMETsNarrow_merged
+
+{r}
+head(minuteMETsNarrow_merged)
+
+{r}
+minuteMETsNarrow_merged$ActivityMinute <- ymd_hms(minuteMETsNarrow_merged$ActivityMinute)
+minuteMETsNarrow_merged$Id <- as.character(minuteMETsNarrow_merged$Id)
+any_missing(minuteMETsNarrow_merged)
+any_duplicates(minuteMETsNarrow_merged)
+
+10. minuteSleep_merged
+
+{r}
+head(minuteSleep_merged)
+
+{r}
+minuteSleep_merged$date <- ymd_hms(minuteSleep_merged$date)
+minuteSleep_merged$Id <- as.character(minuteSleep_merged$Id)
+any_missing(minuteSleep_merged)
+any_duplicates(minuteSleep_merged)
+
+11. minuteStepsNarrow_merged
+
+{r}
+head(minuteStepsNarrow_merged)
+
+{r}
+minuteStepsNarrow_merged$ActivityMinute<- ymd_hms(minuteStepsNarrow_merged$ActivityMinute)
+minuteStepsNarrow_merged$Id <- as.character(minuteStepsNarrow_merged$Id)
+any_missing(minuteStepsNarrow_merged)
+any_duplicates(minuteStepsNarrow_merged)
+
+12. sleepDay_merged
+
+{r}
+head(sleepDay_merged)
+
+{r}
+sleepDay_merged$SleepDay<- ymd(sleepDay_merged$SleepDay)
+sleepDay_merged$Id <- as.character(sleepDay_merged$Id)
+any_missing(sleepDay_merged)
+any_duplicates(sleepDay_merged)
+
+13. weightLogInfo_merged
+
+{r}
+head(weightLogInfo_merged)
+
+{r}
+weightLogInfo_merged$Date<- ymd_hms(weightLogInfo_merged$Date)
+weightLogInfo_merged$Id <- as.character(weightLogInfo_merged$Id)
+any_missing(weightLogInfo_merged)
+any_duplicates(weightLogInfo_merged)
+
+Conclusion
+
+The dataset have been validated and cleaned. Making them ready for analysis
+
+## Analysis
+
+The dataset have been cleaned and is ready to be used for analysis
+
+There are 15 datasets here. These are:
+
+dailyActivity_merged: This is a summary of all activity measurements in a day
+
+dailyintensities_merged: intensity of activities(time and distance)
+
+dailySteps_merged: Amount of steps taken each day
+
+heartrate_seconds_merged: heart rate per seconds
+
+hourlyCalories_merged: Calories burnt each hour
+
+hourlyIntensities_merged: Average and total intensities per hour
+
+hourlySteps_merged: Total steps taken per hour
+
+minuteCaloriesNarrow_merged: Amount of calories burnt per minute
+
+minuteMETsNarrow_merged: The MET value per minute
+
+minuteSleep_merged: Sleep intensity per minute
+
+minuteStepsNarrow_merged: Steps taken per minute
+
+sleepDay_merged: number of time slept, total minutes slept and total time in bed
+
+weightLogInfo_merged: weight(kg, pounds), BMI and if it was manually reported
+
+Lets get some insights!
+
+What day do people take the most steps
+
+create a new column with each day of the week Sunday-1, Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7
+
+{r}
+dailyActivity_merged$day <- wday(dailyActivity_merged$ActivityDate)
+
+{r}
+library(tidyr)
+highest_step <- dailyActivity_merged %>% 
+  group_by(day) %>% 
+  summarise(Total_Steps = sum(TotalSteps), averageSteps = mean(TotalSteps), TotalCalories = sum(Calories), averageCalories = mean(Calories)) %>% 
+  select(day, Total_Steps, averageSteps, TotalCalories, averageCalories) %>% 
+  mutate(Total_Steps = Total_Steps*0.001)
+
+print( highest_step, n = nrow(highest_step))
+
+{r}
+
+days_of_week <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+
+highest_step$day <- factor(highest_step$day,
+                           levels = unique(highest_step$day),
+                           labels = days_of_week
+)
+
+highest_step <- gather(highest_step, key = variable, value = "value", -day)
+
+# create bar chart
+ggplot(highest_step, aes(x = day, y = value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "steps taken (in thousands)", x = "Day", y = "Total steps (seconds)") +
+ # scale_fill_manual(values = c("Sunday" = "red", "Monday" = "yellow", "Tuesday" = "blue", "Wednesday" = "purple", "Thursday" = "brown", "Friday" = "green", "Saturday" = "pink"), labels = days_of_week) +
+  theme_minimal()
+
+From the table below, people who use the app take the most steps on Tuesdays but the least steps on sundays.
+
+What day do people take the most steps
+
+{r}
+
+
