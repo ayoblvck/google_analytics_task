@@ -1,0 +1,90 @@
+---
+title: "analysis"
+author: "Maryam Sanni"
+format: html
+editor: visual
+---
+
+The dataset have been cleaned and is ready to be used for analysis
+
+There are 15 datasets here. These are:
+
+- dailyActivity_merged: This is a summary of all activity measurements in a day
+
+- dailyintensities_merged: intensity of activities(time and distance)
+
+- dailySteps_merged: Amount of steps taken each day
+
+- heartrate_seconds_merged: heart rate per seconds
+
+- hourlyCalories_merged: Calories burnt each hour
+
+- hourlyIntensities_merged: Average and total intensities per hour
+
+- hourlySteps_merged: Total steps taken per hour
+
+- minuteCaloriesNarrow_merged: Amount of calories burnt per minute
+
+- minuteMETsNarrow_merged: The MET value per minute
+
+- minuteSleep_merged: Sleep intensity per minute
+
+- minuteStepsNarrow_merged: Steps taken per minute
+
+- sleepDay_merged: number of time slept, total minutes slept and total time in bed
+
+- weightLogInfo_merged: weight(kg, pounds), BMI and if it was manually reported
+
+## Lets get some insights!
+
+**What day do people take the most steps**
+
+create a new column with each day of the week
+Sunday-1, Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7
+
+```{r}
+dailyActivity_merged$day <- wday(dailyActivity_merged$ActivityDate)
+```
+
+
+```{r}
+library(tidyr)
+highest_step <- dailyActivity_merged %>% 
+  group_by(day) %>% 
+  summarise(Total_Steps = sum(TotalSteps), averageSteps = mean(TotalSteps), TotalCalories = sum(Calories), averageCalories = mean(Calories)) %>% 
+  select(day, Total_Steps, averageSteps, TotalCalories, averageCalories) %>% 
+  mutate(Total_Steps = Total_Steps*0.001)
+
+print( highest_step, n = nrow(highest_step))
+```
+
+```{r}
+
+days_of_week <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+
+highest_step$day <- factor(highest_step$day,
+                           levels = unique(highest_step$day),
+                           labels = days_of_week
+)
+
+highest_step <- gather(highest_step, key = variable, value = "value", -day)
+
+# create bar chart
+ggplot(highest_step, aes(x = day, y = value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "steps taken (in thousands)", x = "Day", y = "Total steps (seconds)") +
+ # scale_fill_manual(values = c("Sunday" = "red", "Monday" = "yellow", "Tuesday" = "blue", "Wednesday" = "purple", "Thursday" = "brown", "Friday" = "green", "Saturday" = "pink"), labels = days_of_week) +
+  theme_minimal()
+```
+From the table below, people who use the app take the most steps on Tuesdays but the least steps on sundays. 
+
+**What day do people take the most steps**
+
+```{r}
+
+```
+
+
+
+
+
