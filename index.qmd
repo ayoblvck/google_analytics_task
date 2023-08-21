@@ -6,64 +6,70 @@ editor: visual
 theme: cosmo
 ---
 
-Introduction
+## Introduction
 
-Bellabeat is a a high-tech manufacturer of health-focused products for women, and meet different characters and team members
+Bellabeat is a successful high-tech manufacturer of health-focused products for women. The company has the potential of becoming a bigger player in the global smart device market. Additionally, Urška Sršen, cofounder and Chief Creative Officer of Bellabeat, believes that analyzing smart device fitness data could help unlock new growth opportunities for the company.
 
-bellabeat logo
+![](images/bellabeat_logo.png)
 
 <hr>
 
 bellabeat offers four products:
 
-Bellabeat app: An app that provides the users with health data related to their activity, sleep, stress, menstrual cycle, and mindfulness habits. This data can help users better understand their current habits and make healthy decisions. The Bellabeat app connects to their line of smart wellness products.
+1.  Bellabeat app: An app that provides the users with health data related to their activity, sleep, stress, menstrual cycle, and mindfulness habits. This data can help users better understand their current habits and make healthy decisions. The Bellabeat app connects to their line of smart wellness products.
 
-Leaf: Bellabeat's classic wellness tracker can be worn as a bracelet, necklace, or clip. The Leaf tracker connects to the Bellabeat app to track activity, sleep, and stress.
+2.  Leaf: Bellabeat's classic wellness tracker can be worn as a bracelet, necklace, or clip. The Leaf tracker connects to the Bellabeat app to track activity, sleep, and stress.
 
-Time: This wellness watch combines the timeless look of a classic timepiece with smart technology to track user activity, sleep, and stress. The Time watch connects to the Bellabeat app to provide you with insights into your daily wellness.
+3.  Time: This wellness watch combines the timeless look of a classic timepiece with smart technology to track user activity, sleep, and stress. The Time watch connects to the Bellabeat app to provide you with insights into your daily wellness.
 
-Spring: This is a water bottle that tracks daily water intake using smart technology to ensure that you are appropriately hydrated throughout the day. The Spring bottle connects to the Bellabeat app to track your hydration levels.
+4.  Spring: This is a water bottle that tracks daily water intake using smart technology to ensure that you are appropriately hydrated throughout the day. The Spring bottle connects to the Bellabeat app to track your hydration levels.
 
-Bellabeat membership: Bellabeat also offers a subscription-based membership program for users. Membership gives users 24/7 access to fully personalized guidance on nutrition, activity, sleep, health and beauty, and mindfulness based on their lifestyle and goals.
+5.  Bellabeat membership: Bellabeat also offers a subscription-based membership program for users. Membership gives users 24/7 access to fully personalized guidance on nutrition, activity, sleep, health and beauty, and mindfulness based on their lifestyle and goals.
 
-Problem statement
+## Problem statement
 
-The aim of this analysis is to analyse smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices.
+The aim of this analysis is to analyse smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices. I will be focusing on how much activity the users undertake as well as how it relates with their BMI. This will allow me advice the company on its marketing strategy
 
 The questions this analysis answers are:
 
-What are some trends in smart device usage? +
+1.  What are some trends in smart device usage?
+2.  How could these trends apply to Bellabeat customers?
+3.  How could these trends help influence Bellabeat marketing strategy?
 
-How could these trends apply to Bellabeat customers? +
+In answering these questions, i will analyse how the activity differs per day and hours, as well as their trends over time, I will also aim to determine how different users carry out their activities. Finally, I will be analyzing the datasets for possible limitations that I observed and possible opportunities for the company to explore.
 
-How could these trends help influence Bellabeat marketing strategy?
+## Data sourcing and preparation
 
-Data sourcing and preparation
+For this project, a public data from kaggle will be used. The dataset contains personal fitness tracker from thirty fitbit users who have consented to the submission and use of their personal tracker data.
 
-For this project, a public data from kaggle containing personal fitness tracker from thirty fitbit users who have consented to the submission and use of their personal tracker data.
+The data is stored locally on my computer as it is a small dataset. I also used GitHub as my version control platform. The data is in a wide format which is compatible with r, the programming language used for this analysis and because it follows the tidy data principles
 
-The data is stored on my computer folder. The data is in a long format which is compatible with the r tool that i am using for this analysis and because it follows the tidy data principles
+For this project, i used `r` language as previously mentioned, as well as some of its packages for data wrangling and visualization. I also used `quarto` to create this report.
 
-For this project, i used r for data wrangling and visualization. i also used quarto to create the report.
+### Data Validation and Cleaning
 
-To maintain data integrity, I ensure that each column of the datasets are consistent and confirm to oredefined rules such as data format and types.
+To maintain data integrity, I ensure that each column of the datasets are consistent and conform to predefined rules such as data format and types.
 
-Data Validation and Cleaning
+In cleaning the data, I ensured i removed missing values, outliers, duplicates and checked for consistent formatting. I used the dplyr and tidyr packages from r to achieve this
 
-In cleaning the data, u ensured i removed missing values, outliers, duplicares and inconsistent formatting. I used the dplyr and tidyr packages from r
+```{r echo=TRUE, results=FALSE}
 
-{r echo=TRUE, results='hide'}
+#load necessary packaged to the library
 library(tidyr)
 library(dplyr)
 library(lubridate)
+library(ggplot2)
+library(corrplot)
+```
 
-I imported the data using read_csv function for all the dataset were stored in csv format
+I imported the data using `read_csv` function, since the datasets were all in csv format
 
-{r echo=FALSE}
+```{r echo=FALSE}
 #read.csv()
+```
 
-{r include=FALSE}
-#load datasets
+```{r include=FALSE}
+#read datasets and convert them to data frames
 dailyActivity_merged <- as.data.frame(read.csv("./clean_dataset/dailyActivity_merged.csv"))
 dailyintensities_merged <- as.data.frame(read.csv("./clean_dataset/dailyintensities_merged.csv"))
 dailySteps_merged <- as.data.frame(read.csv("./clean_dataset/dailySteps_merged.csv"))
@@ -77,25 +83,40 @@ minuteSleep_merged <- as.data.frame(read.csv("./clean_dataset/minuteSleep_merged
 minuteStepsNarrow_merged <- as.data.frame(read.csv("./clean_dataset/minuteStepsNarrow_merged.csv"))
 sleepDay_merged <- as.data.frame(read.csv("./clean_dataset/sleepDay_merged.csv"))
 weightLogInfo_merged <- as.data.frame(read.csv("./clean_dataset/weightLogInfo_merged.csv"))
+```
 
-Dataset description
+**Dataset description**
 
-1. daily Activity merged
+**1. daily Activity merged**
 
-{r}
+About data: This is a summary of all activity measurements in a day
+
+This dataset has 16 columns From the head of the first dataset, the date is in a character format and the id is in a double format it is necessary to change the Id to character and the ActivityDate to date to prevent errors. This action will be done for the other datasets as well
+
+```{r}
 head(dailyActivity_merged)
 
-This dataset has 16 columns From the head of the first dataset, the date is in a character format and the id is in a double format it is necessary to change the Id to character and the ActivityDate to date
-
-{r echo=TRUE}
-dailyActivity_merged$ActivityDate <- ymd(dailyActivity_merged$ActivityDate)
+#convert Id and the Activitydate column to character format and date format respectively
 dailyActivity_merged$Id <- as.character(dailyActivity_merged$Id)
+dailyActivity_merged$ActivityDate <- ymd(dailyActivity_merged$ActivityDate)
 
-In checkimg missing values and duplicates, I created functions that can be reused
+#check data type to see that the change has been made
+str(dailyActivity_merged)
+```
 
-check for missing values
+```{r echo=TRUE}
 
-{r}
+# number of Ids observed
+length(unique(dailyActivity_merged$Id))
+```
+
+To avoid repeating codes, I created functions that can be reused to check for missing values and duplications
+
+**check for missing values**
+
+```{r}
+
+# function to check for missing values
 any_missing <- function(data){
 is_missing <- any(is.na(data))
 if (is_missing){
@@ -105,12 +126,13 @@ if (is_missing){
 }}
 
 any_missing(dailyActivity_merged)
+```
 
-check for duplicates
+**check for duplicates**
 
-Checked for duplicates in the dataset. I created a function that can be reused to = check for duplicates in the other dataset
+Checked for duplicates in the dataset. I created a function that can be reused to check for duplicates in the other dataset
 
-{r}
+```{r}
 any_duplicates <- function(dataset){
  is_duplicates <- any(duplicated(dataset) | duplicated(dataset, fromLast = TRUE))
 
@@ -119,236 +141,561 @@ if (is_duplicates) {
 } else {
   return("There are no duplicate rows in the data.")
 }}
+```
 
-{r}
+```{r}
 any_duplicates(dailyActivity_merged)
+```
 
-2. dailyintensities_merged
+**2. dailyintensities_merged**
 
-{r}
+About data: This dataset is a record of intensity of activities (time and distance)
+
+```{r}
 head(dailyintensities_merged)
+length(unique(dailyActivity_merged$Id))
+```
 
 convert chr to date data type for Activity Day
 
-{r}
+```{r}
 dailyintensities_merged$ActivityDay<- ymd(dailyintensities_merged$ActivityDay)
+```
 
 check for missing data
 
-{r}
+```{r}
 any_missing(dailyintensities_merged)
 any_duplicates(dailyintensities_merged)
+length(unique(dailyintensities_merged$Id))
+```
 
-3. dailySteps_merged
+**3. dailySteps_merged**
 
-{r}
+About data: records amount of steps taken each day
+
+```{r}
 head(dailySteps_merged)
+length(unique(dailySteps_merged$Id))
+```
 
-{r}
+```{r}
 dailySteps_merged$ActivityDay <- ymd(dailySteps_merged$ActivityDay)
 any_missing(dailySteps_merged)
 any_duplicates(dailySteps_merged)
+```
 
-4. heartrate_seconds_merged
+**4. heartrate_seconds_merged**
 
-{r}
+About data: records heart rate per seconds
+
+```{r}
 head(heartrate_seconds_merged)
+length(unique(heartrate_seconds_merged$Id))
+```
 
-{r}
+```{r}
 heartrate_seconds_merged$Time <- ymd_hms(heartrate_seconds_merged$Time)
 any_missing(heartrate_seconds_merged)
 any_duplicates(heartrate_seconds_merged)
 
-5. hourlyCalories_merged
+```
 
-{r}
+**5. hourlyCalories_merged**
+
+About data: records calories burnt each hour
+
+```{r}
 head(hourlyCalories_merged)
 
-{r}
+```
+
+```{r}
 hourlyCalories_merged$ActivityHour <- ymd_hms(hourlyCalories_merged$ActivityHour)
 hourlyCalories_merged$Id <- as.character(hourlyCalories_merged$Id)
 any_missing(hourlyCalories_merged)
 any_duplicates(hourlyCalories_merged)
+length(unique(hourlyCalories_merged$Id))
+```
 
-6. hourlyIntensities_merged
+**6. hourlyIntensities_merged**
 
-{r}
+About data: records average and total intensities per hour
+
+```{r}
 head(hourlyIntensities_merged)
+```
 
-{r}
+```{r}
 hourlyIntensities_merged$ActivityHour <- ymd_hms(hourlyIntensities_merged$ActivityHour)
 hourlyIntensities_merged$Id <- as.character(hourlyIntensities_merged$Id)
 any_missing(hourlyIntensities_merged)
 any_duplicates(hourlyIntensities_merged)
+```
 
-7. hourlySteps_merged
+**7. hourlySteps_merged**
 
-{r}
+About data: records total steps taken per hour
+
+```{r}
 head(hourlySteps_merged)
+```
 
-{r}
+```{r}
 hourlySteps_merged$ActivityHour <- ymd_hms(hourlySteps_merged$ActivityHour)
 hourlySteps_merged$Id <- as.character(hourlySteps_merged$Id)
 any_missing(hourlySteps_merged)
 any_duplicates(hourlySteps_merged)
+length(unique(hourlySteps_merged$Id))
+```
 
-8. minuteCaloriesNarrow_merged
+**8. minuteCaloriesNarrow_merged**
 
-{r}
+About data: records the amount of calories burnt per minute
+
+```{r}
 head(minuteCaloriesNarrow_merged)
+```
 
-{r}
+```{r}
 minuteCaloriesNarrow_merged$ActivityMinute <- ymd_hms(minuteCaloriesNarrow_merged$ActivityMinute)
 minuteCaloriesNarrow_merged$Id <- as.character(minuteCaloriesNarrow_merged$Id)
 any_missing(minuteCaloriesNarrow_merged)
 any_duplicates(minuteCaloriesNarrow_merged)
+length(minuteCaloriesNarrow_merged$Id)
+```
 
-There is a missing value found in the minuteCaloriesNarrow_merged data
+There is a row with missing value found in the minuteCaloriesNarrow_merged data
 
-{r}
+```{r}
 #check the rows with missing values
 #rows_with_missing <- minuteCaloriesNarrow_merged[apply(is.na(data), 1, any), ]
 
 missing_rows <- minuteCaloriesNarrow_merged[!complete.cases(minuteCaloriesNarrow_merged),]
 print(missing_rows)
 
+```
+
 Since its just one row missing, i will remove it
 
-{r}
+```{r}
 minuteCaloriesNarrow_merged <- minuteCaloriesNarrow_merged[complete.cases(minuteCaloriesNarrow_merged),]
+```
 
-9. minuteMETsNarrow_merged
+confirm that there are no more missing values
 
-{r}
+```{r}
+any_missing(minuteCaloriesNarrow_merged)
+```
+
+**9. minuteMETsNarrow_merged**
+
+About data: records the MET value per minute
+
+```{r}
 head(minuteMETsNarrow_merged)
+length(unique(minuteMETsNarrow_merged$Id))
+```
 
-{r}
+```{r}
 minuteMETsNarrow_merged$ActivityMinute <- ymd_hms(minuteMETsNarrow_merged$ActivityMinute)
 minuteMETsNarrow_merged$Id <- as.character(minuteMETsNarrow_merged$Id)
 any_missing(minuteMETsNarrow_merged)
 any_duplicates(minuteMETsNarrow_merged)
+```
 
-10. minuteSleep_merged
+**10. minuteSleep_merged**
 
-{r}
+About data: records sleep intensity per minute
+
+```{r}
 head(minuteSleep_merged)
+length(unique(minuteSleep_merged$Id))
+```
 
-{r}
+```{r}
 minuteSleep_merged$date <- ymd_hms(minuteSleep_merged$date)
 minuteSleep_merged$Id <- as.character(minuteSleep_merged$Id)
 any_missing(minuteSleep_merged)
 any_duplicates(minuteSleep_merged)
+```
 
-11. minuteStepsNarrow_merged
+**11. minuteStepsNarrow_merged**
 
-{r}
+About data: records steps taken per minute
+
+```{r}
 head(minuteStepsNarrow_merged)
+```
 
-{r}
+```{r}
 minuteStepsNarrow_merged$ActivityMinute<- ymd_hms(minuteStepsNarrow_merged$ActivityMinute)
 minuteStepsNarrow_merged$Id <- as.character(minuteStepsNarrow_merged$Id)
 any_missing(minuteStepsNarrow_merged)
 any_duplicates(minuteStepsNarrow_merged)
+length(unique(minuteStepsNarrow_merged$Id))
+```
 
-12. sleepDay_merged
+**12. sleepDay_merged**
 
-{r}
+About data: records the number of time slept, total minutes slept and total time in bed
+
+```{r}
 head(sleepDay_merged)
+```
 
-{r}
+```{r}
 sleepDay_merged$SleepDay<- ymd(sleepDay_merged$SleepDay)
 sleepDay_merged$Id <- as.character(sleepDay_merged$Id)
+sleepDay_merged$TotalSleepRecords <- as.factor(sleepDay_merged$TotalSleepRecords)
 any_missing(sleepDay_merged)
 any_duplicates(sleepDay_merged)
 
-13. weightLogInfo_merged
+length(unique(sleepDay_merged$Id))
+```
 
-{r}
+**13. weightLogInfo_merged**
+
+About data: records weight(kg, pounds), BMI and if it was manually reported
+
+```{r}
 head(weightLogInfo_merged)
+unique(weightLogInfo_merged$Id)
 
-{r}
+nrow(weightLogInfo_merged[weightLogInfo_merged$IsManualReport == TRUE,])
+nrow(weightLogInfo_merged[weightLogInfo_merged$IsManualReport == FALSE,])
+```
+
+```{r}
 weightLogInfo_merged$Date<- ymd_hms(weightLogInfo_merged$Date)
 weightLogInfo_merged$Id <- as.character(weightLogInfo_merged$Id)
 any_missing(weightLogInfo_merged)
 any_duplicates(weightLogInfo_merged)
+length(unique(weightLogInfo_merged$Id))
+```
 
-Conclusion
+## Data Analysis
 
-The dataset have been validated and cleaned. Making them ready for analysis
+In this aspect of the report, I will be analysing the datasets to check for how various activities differ with day and time and to check for correlation between different variables
 
-## Analysis
+First, I will be carrying out a summary analysis on the datasets and then carry out a customer analysis focusing on the users that have their weight registered
 
-The dataset have been cleaned and is ready to be used for analysis
+**Analysis of hoe users activities on dofferent days**
 
-There are 15 datasets here. These are:
+To determine the day of the week people take the most steps
 
-dailyActivity_merged: This is a summary of all activity measurements in a day
-
-dailyintensities_merged: intensity of activities(time and distance)
-
-dailySteps_merged: Amount of steps taken each day
-
-heartrate_seconds_merged: heart rate per seconds
-
-hourlyCalories_merged: Calories burnt each hour
-
-hourlyIntensities_merged: Average and total intensities per hour
-
-hourlySteps_merged: Total steps taken per hour
-
-minuteCaloriesNarrow_merged: Amount of calories burnt per minute
-
-minuteMETsNarrow_merged: The MET value per minute
-
-minuteSleep_merged: Sleep intensity per minute
-
-minuteStepsNarrow_merged: Steps taken per minute
-
-sleepDay_merged: number of time slept, total minutes slept and total time in bed
-
-weightLogInfo_merged: weight(kg, pounds), BMI and if it was manually reported
-
-Lets get some insights!
-
-What day do people take the most steps
-
-create a new column with each day of the week Sunday-1, Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7
-
-{r}
+```{r}
 dailyActivity_merged$day <- wday(dailyActivity_merged$ActivityDate)
 
-{r}
-library(tidyr)
+# create a subset from the dailyActivity_merged data and then a new column with the respective day of the week. 
+# this will be derived using the lubridate package
+
 highest_step <- dailyActivity_merged %>% 
   group_by(day) %>% 
-  summarise(Total_Steps = sum(TotalSteps), averageSteps = mean(TotalSteps), TotalCalories = sum(Calories), averageCalories = mean(Calories)) %>% 
-  select(day, Total_Steps, averageSteps, TotalCalories, averageCalories) %>% 
+  summarise(Total_Steps = sum(TotalSteps)) %>% 
+  select(day, Total_Steps) %>% 
   mutate(Total_Steps = Total_Steps*0.001)
 
-print( highest_step, n = nrow(highest_step))
+highest_step$day <- weekdays(as.Date(highest_step$day, origin = "2023-07-01"))
+highest_step$day <- factor(highest_step$day, levels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
 
-{r}
 
-days_of_week <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
-
-highest_step$day <- factor(highest_step$day,
-                           levels = unique(highest_step$day),
-                           labels = days_of_week
-)
-
-highest_step <- gather(highest_step, key = variable, value = "value", -day)
-
-# create bar chart
-ggplot(highest_step, aes(x = day, y = value, fill = variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
+ggplot(highest_step, aes(x = day, y = Total_Steps, fill = day)) +
+  geom_bar(stat = "identity") +
   labs(title = "steps taken (in thousands)", x = "Day", y = "Total steps (seconds)") +
- # scale_fill_manual(values = c("Sunday" = "red", "Monday" = "yellow", "Tuesday" = "blue", "Wednesday" = "purple", "Thursday" = "brown", "Friday" = "green", "Saturday" = "pink"), labels = days_of_week) +
+  theme_minimal()
+```
+
+What time of the day do users take the most steps
+
+```{r}
+hourlySteps_merged <- hourlySteps_merged %>% 
+  mutate( TimeofDay = case_when(
+    hour(ActivityHour) >= 0 & hour(ActivityHour) < 12 ~ 1,
+    hour(ActivityHour) >= 12  & hour(ActivityHour) < 18 ~ 2,
+    TRUE ~ 3
+  ))
+
+hourlySteps_merged_td <- hourlySteps_merged %>% 
+  group_by(TimeofDay) %>% 
+  summarise(Total_steps = sum(StepTotal)*0.0001, avg_steps = mean(StepTotal)) %>% 
+  select(TimeofDay, Total_steps, avg_steps)
+
+head(hourlySteps_merged_td)
+
+hourlySteps_merged_td$TimeofDay <- as.factor(hourlySteps_merged_td$TimeofDay)
+
+# convert to long data
+hourlySteps_merged_long <- gather(hourlySteps_merged_td, key = "variable", value = "value", -TimeofDay)
+
+ggplot(hourlySteps_merged_long, aes(x = TimeofDay, y = value, 
+                                     fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge")+
+ # scale_fill_manual(values =  c("1" = "#007fff", "2" = "#324ab2", "3" = "#008080"), 
+   #                 labels = c("1" = "Morning", "2" = "Afternoon", "3" = "Evening"))+
+  labs(title = "Amount of steps taken at different times of the day",
+     fill = "Time of day") +
+  theme_minimal()
+  
+
+head(hourlySteps_merged)
+```
+
+**analyse what time of the day people burn the most calories**
+
+```{r}
+hourlyCalories_merged <- hourlyCalories_merged %>% 
+  mutate( TimeofDay = case_when(
+    hour(ActivityHour) >= 0 & hour(ActivityHour) < 12 ~ 1,
+    hour(ActivityHour) >= 12  & hour(ActivityHour) < 18 ~ 2,
+    TRUE ~ 3
+  ))
+
+hourlyCalories_merged_td <- hourlyCalories_merged %>% 
+  group_by(TimeofDay) %>% 
+  summarise(total_calories_burnt = sum(Calories)*0.0001, avg_calories = mean(Calories)) %>% 
+  select(TimeofDay, total_calories_burnt, avg_calories)
+
+head(hourlyCalories_merged_td)
+
+hourlyCalories_merged_td$TimeofDay <- as.factor(hourlyCalories_merged_td$TimeofDay)
+
+# convert to long data
+hourly_calories_long <- gather(hourlyCalories_merged_td, key = "variable", value = "value", -TimeofDay)
+
+ggplot(hourly_calories_long, aes(x = TimeofDay, y = value, 
+                                     fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge")+
+ # scale_fill_manual(values =  c("1" = "#007fff", "2" = "#324ab2", "3" = "#008080"), 
+   #                 labels = c("1" = "Morning", "2" = "Afternoon", "3" = "Evening"))+
+  labs(title = "Amount of Calories burnt at different times of the day",
+     fill = "Time of day") +
+  theme_minimal()
+  
+```
+
+what time of the day do people fall asleep the ost
+
+```{r}
+sleepDay_merged$day <- wday(sleepDay_merged$SleepDay)
+
+highest_sleep <- sleepDay_merged%>% 
+  group_by(day) %>% 
+  summarise(Total_Sleep = sum(TotalMinutesAsleep), avg_sleep = mean(TotalMinutesAsleep)) %>% 
+  select(day, Total_Sleep, avg_sleep) %>% 
+  mutate(Total_Sleep = Total_Sleep*0.001)
+
+highest_sleep$day <- weekdays(as.Date(highest_sleep$day, origin = "2023-07-01"))
+highest_sleep$day <- factor(highest_sleep$day, levels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
+
+ggplot(highest_sleep, aes(x = day, y = Total_Sleep, fill = day)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Time asleep", x = "Day", y = "Total sleep (Minutes") +
   theme_minimal()
 
-From the table below, people who use the app take the most steps on Tuesdays but the least steps on sundays.
+ggplot(highest_sleep, aes(x = day, y = avg_sleep, fill = day)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Time asleep", x = "Day", y = "Total sleep (Minutes") +
+  theme_minimal()
 
-What day do people take the most steps
+```
 
-{r}
+**customer analysis**
+
+```{r}
+
+#summary of the amount of steps taken from the dailyActivity_merged data and merge it
+
+head(weightLogInfo_merged)
+weight_data <- weightLogInfo_merged %>% 
+  group_by(Id) %>% 
+  summarise(WeightKg = mean(WeightKg), BMI = mean(BMI)) %>% 
+  select(Id, WeightKg, BMI)
+
+weight_step <- dailyActivity_merged %>% 
+  group_by(Id) %>% 
+  summarise(Total_Steps = sum(TotalSteps), avg_steps = mean(TotalSteps)) %>% 
+  select(Id, Total_Steps, avg_steps) %>% 
+  mutate(Total_Steps = Total_Steps*0.0001, avg_steps = avg_steps*0.001)
 
 
+merged_weight_steps <- left_join(weight_data, weight_step, by= "Id")
+
+#reassigned IDs with new names
+merged_weight_steps$Id <- factor(merged_weight_steps$Id,
+                           levels = unique(merged_weight_steps$Id)
+)
+
+head(merged_weight_steps, n=nrow(weight_data))
+```
+
+**graph to show the relationship between weight, BMI, and steps taken**
+
+```{r}
+#reassigned IDs with new names to make plot viewbable
+merged_weight_steps$Id <- factor(merged_weight_steps$Id,
+                           levels = unique(merged_weight_steps$Id),
+                           labels = c("A", "B", "C", "D", "E", "F", "G", "H")
+)
+#merged_weight_steps$Id <- factor(merged_weight_steps$Id,
+                           #levels = unique(merged_weight_steps$Id)
+#)
+head(merged_weight_steps)
+
+BMI_arranged <- merged_weight_steps %>% 
+  arrange(BMI)
+
+cat("In ascending order, the Ids arranged according to their BMI is", as.character(BMI_arranged$Id))
+#Key: A = 1503960366, B = 1927972279, C = 2873212765, D = 4319703577, E = 4558609924, F = 5577150313, G = 6962181067, H = 8877689391 
+
+merged_weight <- gather(merged_weight_steps, key = variable, value = "value", -Id)
+ggplot(merged_weight, aes(x = Id, y = value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge", width = .9) +
+  labs(title = "relationship between the weight, BMI and amount of steps of the 8 users", 
+       caption = "A = 1503960366, B = 1927972279, C = 2873212765, D = 4319703577, 
+       E = 4558609924, F = 5577150313, G = 6962181067, H = 8877689391")+
+  theme_minimal() +
+  theme(plot.background = element_rect(linewidth = 2))
+
+```
+
+From the graph below, it seems to suggest that there might be a relationship between the weight and the steps taken. To test this hypothesis, the correlation between the total steps taken, weight and BMI is checked using a correlation matrix
+
+```{r}
+#correlation between BMI and total steps using a correlation matric
+
+corr_weight <- cor(merged_weight_steps[,c(-1, -4)])
+corrplot(corr_weight, method = "number")
+
+```
+
+The graph shows there is a negative correlation between the avg steps of the users and the BMI/Weight with the BMI being stronger. i.e the higher the BMI, the lesser the average steps\*\*
+
+To further investigate this hypothesis, I will be analyzing the subset of people that have their weights recorder to see how much activity they take
+
+```{r}
+activity <- subset(dailyActivity_merged, dailyActivity_merged$Id %in% weightLogInfo_merged$Id)
+print(table(activity$Id))
+
+#to allow the users to be easily remembered, i will assign an alphabet to their IDs
+
+weightLogInfo_merged$Id <- factor(weightLogInfo_merged$Id,
+                           levels = unique(weightLogInfo_merged$Id),
+                           labels = c("A", "B", "C", "D", "E", "F", "G", "H"))
+
+activity$Id <- factor(activity$Id,
+                           levels = unique(activity$Id),
+                           labels = c("A", "B", "C", "D", "E", "F", "G", "H"))                         
+```
+
+**weight trends over time**
+
+I first checked their weight trend over time
+
+```{r}
+ggplot(weightLogInfo_merged, aes(x = Date, y = WeightKg, color = as.factor(Id))) +
+  geom_line() +
+  labs(title = "weight trends over time", x = "Time", y = "weight (Kg)" , caption = "Id Key: A = 1503960366, B = 1927972279, C = 2873212765, D = 4319703577, 
+       E = 4558609924, F = 5577150313, G = 6962181067, H = 8877689391") +
+  scale_color_manual(values = c("A" = "green", "B" = "yellow", "C" = "blue", "D" = "red", "E" = "purple", "F" = "brown", "G" = "orange", "H" = "black" )) +
+  #scale_y_datetime(date_labels = "%b %d") +
+  theme_minimal()
+```
+
+\*\*Distance trends over time\*
+
+```{r}
+head(activity)
+
+ggplot(activity, aes(x = ActivityDate, y = TotalDistance, color = as.factor(Id))) +
+  geom_line() +
+  labs(title = "Distance trends over time", x = "Time", y = "Total Distance", caption = "Id Key: A = 1503960366, B = 1927972279, C = 2873212765, D = 4319703577, 
+       E = 4558609924, F = 5577150313, G = 6962181067, H = 8877689391") +
+  scale_color_manual(values = c("A" = "green", "B" = "yellow", "C" = "blue", "D" = "red", "E" = "purple", "F" = "brown", "G" = "orange", "H" = "black" )) +
+  #scale_y_datetime(date_labels = "%b %d") +
+  #scale_color_discrete(name = "Id") +
+  theme_minimal()
+```
+
+**Calories burnt over time**
+
+```{r}
+ggplot(activity, aes(x = ActivityDate, y = Calories, color = as.factor(Id))) +
+  geom_line() +
+  labs(title = "Callories burnt over time", x = "Time", y = "Calories burnt", caption = "Id Key: A = 1503960366, B = 1927972279, C = 2873212765, D = 4319703577, 
+       E = 4558609924, F = 5577150313, G = 6962181067, H = 8877689391") +
+  scale_color_manual(values = c("A" = "green", "B" = "yellow", "C" = "blue", "D" = "red", "E" = "purple", "F" = "brown", "G" = "orange", "H" = "black" )) +
+  #scale_y_datetime(date_labels = "%b %d") +
+  #scale_color_discrete(name = "Id") +
+  theme_minimal()
+```
+
+```{r}
+# boxplot
+
+A <- subset(activity, Id == "A")
+
+ggplot(A, aes(x = 1, y = Calories)) +
+  geom_boxplot()
+str(A)
+
+A$day <- as.factor(A$day)
+
+head(A)
+model <- lm(Calories ~ day, data = A)
+print(model)
+slope <- coef(model[['ActivityDate']])
+summary(model)
+```
+
+**sedentary minutes over time**
+
+```{r}
+ggplot(activity, aes(x = ActivityDate, y = SedentaryMinutes, color = as.factor(Id))) +
+  geom_line() +
+  labs(title = "Sedentary minutes over time", x = "Time", y = "Sedentary minutes", caption = "Id Key: A = 1503960366, B = 1927972279, C = 2873212765, D = 4319703577, 
+       E = 4558609924, F = 5577150313, G = 6962181067, H = 8877689391") +
+  scale_color_manual(values = c("A" = "green", "B" = "yellow", "C" = "blue", "D" = "red", "E" = "purple", "F" = "brown", "G" = "orange", "H" = "black" )) +
+  #scale_y_datetime(date_labels = "%b %d") +
+  #scale_color_discrete(name = "Id") +
+  theme_minimal()
+```
+
+**Very Active minutes**
+
+```{r}
+ggplot(activity, aes(x = ActivityDate, y = VeryActiveMinutes, color = as.factor(Id))) +
+  geom_line() +
+  labs(title = "Very active minutes over time", x = "Time", y = "Very activity minutes", caption = "Id Key: A = 1503960366, B = 1927972279, C = 2873212765, D = 4319703577, 
+       E = 4558609924, F = 5577150313, G = 6962181067, H = 8877689391") +
+  scale_color_manual(values = c("A" = "green", "B" = "yellow", "C" = "blue", "D" = "red", "E" = "purple", "F" = "brown", "G" = "orange", "H" = "black" )) +
+  scale_x_date( date_labels = "%b %d") +
+  #scale_color_discrete(name = "Id") +
+  theme_minimal()
+```
+
+## Result and Insights
+
+Insights from summary analysis
+
+Users take the most steps on Tuesdays and the least steps on Thursdays. For calories, People burn the most calories in the mornings but on an average, they burn more calories in the afternoons.
+
+The analysis has shown that there is a negative correlation between the BMI and activity levels of the users which was the basis of our hypothesis that the the lower the weight of the users, the higher the activity level of that users. This led me to carry out further analysis to see the progression of different variables over time.
+
+## Recommendations and Limitations
+
+one of the limitations observed is that although 33 users were supposed to be gotten, some dataset had less than 33 users observed.
+
+For instance, weightLogInfo_merged just had 8 users, sleepDay_merged had 24 users.
+
+From this analysis, one apparent limitation is the small number of weight/BMI data recorded.
+
+**recommendations**
+
+It is clear that there is no motivation for users to record their weight/BMI and that is a key determinant of good health. It also aids in showing how much impact the activity the users have on their weight. The analysis has also shown a correlation between the weight of the users and their activities
+
+One recommendation is for the company to prioritize users logging their weights by encouraging users to log their weights. This can be by making the logging process easier or by insensitive the logging process.
+
+## Conclusion
+
+The dataset was validated and cleaned. An analysis was then done to get insights. Recommendations were made for the marketing team

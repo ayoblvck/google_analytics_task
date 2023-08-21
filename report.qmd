@@ -8,7 +8,7 @@ theme: cosmo
 
 ## Introduction
 
-Bellabeat is a successful high-tech manufacturer of health-focused products for women. The company has the potential to bevome a bigger player in the global smart device market. Additionally, Urška Sršen, cofounder and Chief Creative Officer of Bellabeat, believe that analyzing smart device fitness data could help unlock new growth opportunities for the company.
+Bellabeat is a successful high-tech manufacturer of health-focused products for women. The company has the potential of becoming a bigger player in the global smart device market. Additionally, Urška Sršen, cofounder and Chief Creative Officer of Bellabeat, believes that analyzing smart device fitness data could help unlock new growth opportunities for the company.
 
 ![](images/bellabeat_logo.png)
 
@@ -28,7 +28,7 @@ bellabeat offers four products:
 
 ## Problem statement
 
-The aim of this analysis is to analyse smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices. I will be focusing on how much activity the users undertake. This will allow me advuce the company on its marketing strategy
+The aim of this analysis is to analyse smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices. I will be focusing on how much activity the users undertake as well as how it relates with their BMI. This will allow me advice the company on its marketing strategy
 
 The questions this analysis answers are:
 
@@ -500,7 +500,7 @@ ggplot(highest_sleep, aes(x = day, y = avg_sleep, fill = day)) +
 
 ```
 
-## customer analysis
+**customer analysis**
 
 ```{r}
 

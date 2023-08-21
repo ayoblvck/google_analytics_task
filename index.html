@@ -58,16 +58,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="report_files/libs/clipboard/clipboard.min.js"></script>
-<script src="report_files/libs/quarto-html/quarto.js"></script>
-<script src="report_files/libs/quarto-html/popper.min.js"></script>
-<script src="report_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="report_files/libs/quarto-html/anchor.min.js"></script>
-<link href="report_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="report_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -103,7 +103,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Bellabeat is a a high-tech manufacturer of health-focused products for women, and meet different characters and team members</p>
+<p>Bellabeat is a successful high-tech manufacturer of health-focused products for women. The company has the potential of becoming a bigger player in the global smart device market. Additionally, Urška Sršen, cofounder and Chief Creative Officer of Bellabeat, believes that analyzing smart device fitness data could help unlock new growth opportunities for the company.</p>
 <p><img src="images/bellabeat_logo.png" class="img-fluid"></p>
 <hr>
 <p>bellabeat offers four products:</p>
@@ -117,20 +117,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="problem-statement" class="level2">
 <h2 class="anchored" data-anchor-id="problem-statement">Problem statement</h2>
-<p>The aim of this analysis is to analyse smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices. I will be focusing on how much activity the users undertake. The wellness watch tracks activity, sleep and stress levels.</p>
+<p>The aim of this analysis is to analyse smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices. I will be focusing on how much activity the users undertake as well as how it relates with their BMI. This will allow me advice the company on its marketing strategy</p>
 <p>The questions this analysis answers are:</p>
 <ol type="1">
 <li>What are some trends in smart device usage?</li>
 <li>How could these trends apply to Bellabeat customers?</li>
 <li>How could these trends help influence Bellabeat marketing strategy?</li>
 </ol>
-<p>In answering these questions, i will analyse how the activity trends over time, I will also determine how the different trend in different customers affect theses customers as well as possible limitations that are observed and advice will be given to the Bellbeat marketing strategy</p>
+<p>In answering these questions, i will analyse how the activity differs per day and hours, as well as their trends over time, I will also aim to determine how different users carry out their activities. Finally, I will be analyzing the datasets for possible limitations that I observed and possible opportunities for the company to explore.</p>
 </section>
 <section id="data-sourcing-and-preparation" class="level2">
 <h2 class="anchored" data-anchor-id="data-sourcing-and-preparation">Data sourcing and preparation</h2>
 <p>For this project, a public data from kaggle will be used. The dataset contains personal fitness tracker from thirty fitbit users who have consented to the submission and use of their personal tracker data.</p>
-<p>The data is stored locally on my computer as it is a smaller dataset. I also used Gihub as my version control platform. The data is in a wide format which is compatible with r whch is the programming language i used for this analysis and because it follows the tidy data principles</p>
-<p>For this project, i used <code>r</code> language as previously mentioned, as well as some of its packages for data wrangling and visualization. I also used <code>quarto</code> to create the report.</p>
+<p>The data is stored locally on my computer as it is a small dataset. I also used GitHub as my version control platform. The data is in a wide format which is compatible with r, the programming language used for this analysis and because it follows the tidy data principles</p>
+<p>For this project, i used <code>r</code> language as previously mentioned, as well as some of its packages for data wrangling and visualization. I also used <code>quarto</code> to create this report.</p>
 <section id="data-validation-and-cleaning" class="level3">
 <h3 class="anchored" data-anchor-id="data-validation-and-cleaning">Data Validation and Cleaning</h3>
 <p>To maintain data integrity, I ensure that each column of the datasets are consistent and conform to predefined rules such as data format and types.</p>
@@ -698,18 +698,12 @@ Attaching package: 'lubridate'</code></pre>
 </div>
 </section>
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>The dataset have been validated and cleaned. Making them ready for analysis</p>
-</section>
-<section id="data-analysis" class="level1">
-<h1>Data Analysis</h1>
-<p>In this aspect of the report, we will be analysing the datasets to see if there is a correlation between the cuatomers weight, BMI and their exercise activity</p>
-<p>one of the limitations observed is that although 33 users were supposed to be gotten, some dataset had less than 33 users observed.</p>
-<p>For instance, weightLogInfo_merged just had 8 users, sleepDay_merged had 24 users.</p>
+<section id="data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="data-analysis">Data Analysis</h2>
+<p>In this aspect of the report, I will be analysing the datasets to check for how various activities differ with day and time and to check for correlation between different variables</p>
 <p>First, I will be carrying out a summary analysis on the datasets and then carry out a customer analysis focusing on the users that have their weight registered</p>
-<p><strong>macro summary of how the users use the app</strong></p>
-<p>Analyse day people take the most activity</p>
+<p><strong>Analysis of hoe users activities on dofferent days</strong></p>
+<p>To determine the day of the week people take the most steps</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a>dailyActivity_merged<span class="sc">$</span>day <span class="ot">&lt;-</span> <span class="fu">wday</span>(dailyActivity_merged<span class="sc">$</span>ActivityDate)</span>
 <span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -731,7 +725,7 @@ Attaching package: 'lubridate'</code></pre>
 <span id="cb131-18"><a href="#cb131-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"steps taken (in thousands)"</span>, <span class="at">x =</span> <span class="st">"Day"</span>, <span class="at">y =</span> <span class="st">"Total steps (seconds)"</span>) <span class="sc">+</span></span>
 <span id="cb131-19"><a href="#cb131-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>What time of the day do users take the most steps</p>
@@ -771,7 +765,7 @@ Attaching package: 'lubridate'</code></pre>
 <span id="cb134-12"><a href="#cb134-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">fill =</span> <span class="st">"Time of day"</span>) <span class="sc">+</span></span>
 <span id="cb134-13"><a href="#cb134-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(hourlySteps_merged)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -821,7 +815,7 @@ Attaching package: 'lubridate'</code></pre>
 <span id="cb139-12"><a href="#cb139-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">fill =</span> <span class="st">"Time of day"</span>) <span class="sc">+</span></span>
 <span id="cb139-13"><a href="#cb139-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>what time of the day do people fall asleep the ost</p>
@@ -842,18 +836,17 @@ Attaching package: 'lubridate'</code></pre>
 <span id="cb140-14"><a href="#cb140-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Time asleep"</span>, <span class="at">x =</span> <span class="st">"Day"</span>, <span class="at">y =</span> <span class="st">"Total sleep (Minutes"</span>) <span class="sc">+</span></span>
 <span id="cb140-15"><a href="#cb140-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(highest_sleep, <span class="fu">aes</span>(<span class="at">x =</span> day, <span class="at">y =</span> avg_sleep, <span class="at">fill =</span> day)) <span class="sc">+</span></span>
 <span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
 <span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Time asleep"</span>, <span class="at">x =</span> <span class="st">"Day"</span>, <span class="at">y =</span> <span class="st">"Total sleep (Minutes"</span>) <span class="sc">+</span></span>
 <span id="cb141-4"><a href="#cb141-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-40-2.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-40-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<section id="customer-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="customer-analysis">customer analysis</h2>
+<p><strong>customer analysis</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summary of the amount of steps taken from the dailyActivity_merged data and merge it</span></span>
 <span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -948,7 +941,7 @@ Attaching package: 'lubridate'</code></pre>
 <span id="cb150-9"><a href="#cb150-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb150-10"><a href="#cb150-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">linewidth =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>From the graph below, it seems to suggest that there might be a relationship between the weight and the steps taken. To test this hypothesis, the correlation between the total steps taken, weight and BMI is checked using a correlation matrix</p>
@@ -958,7 +951,7 @@ Attaching package: 'lubridate'</code></pre>
 <span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a>corr_weight <span class="ot">&lt;-</span> <span class="fu">cor</span>(merged_weight_steps[,<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">4</span>)])</span>
 <span id="cb151-4"><a href="#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(corr_weight, <span class="at">method =</span> <span class="st">"number"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The graph shows there is a negative correlation between the avg steps of the users and the BMI/Weight with the BMI being stronger. i.e the higher the BMI, the lesser the average steps**</p>
@@ -994,7 +987,7 @@ Attaching package: 'lubridate'</code></pre>
 <span id="cb155-6"><a href="#cb155-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_y_datetime(date_labels = "%b %d") +</span></span>
 <span id="cb155-7"><a href="#cb155-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>**Distance trends over time*</p>
@@ -1039,7 +1032,7 @@ Attaching package: 'lubridate'</code></pre>
 <span id="cb158-7"><a href="#cb158-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_color_discrete(name = "Id") +</span></span>
 <span id="cb158-8"><a href="#cb158-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>Calories burnt over time</strong></p>
@@ -1053,7 +1046,7 @@ Attaching package: 'lubridate'</code></pre>
 <span id="cb159-7"><a href="#cb159-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_color_discrete(name = "Id") +</span></span>
 <span id="cb159-8"><a href="#cb159-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -1064,7 +1057,7 @@ Attaching package: 'lubridate'</code></pre>
 <span id="cb160-5"><a href="#cb160-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(A, <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> Calories)) <span class="sc">+</span></span>
 <span id="cb160-6"><a href="#cb160-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1172,7 +1165,7 @@ F-statistic: 1.063 on 6 and 24 DF,  p-value: 0.4112</code></pre>
 <span id="cb169-7"><a href="#cb169-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_color_discrete(name = "Id") +</span></span>
 <span id="cb169-8"><a href="#cb169-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>Very Active minutes</strong></p>
@@ -1186,23 +1179,28 @@ F-statistic: 1.063 on 6 and 24 DF,  p-value: 0.4112</code></pre>
 <span id="cb170-7"><a href="#cb170-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_color_discrete(name = "Id") +</span></span>
 <span id="cb170-8"><a href="#cb170-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="report_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 <section id="result-and-insights" class="level2">
 <h2 class="anchored" data-anchor-id="result-and-insights">Result and Insights</h2>
 <p>Insights from summary analysis</p>
-<p>Users take the most steps on Tuesdays and the least steps on thursdays. For calories, People burn the most calories in the mornings but on an average, they burn more aclories in the afternoons.</p>
-<p>The analysis has shown that there is a negetive correlation between the BMI and activity levels of the users which was the basis of our hypothesis that the the lower the weight of the users, the higher the activity level of that users. This led me to carry out further analysis to see the progression of different variables over time.</p>
+<p>Users take the most steps on Tuesdays and the least steps on Thursdays. For calories, People burn the most calories in the mornings but on an average, they burn more calories in the afternoons.</p>
+<p>The analysis has shown that there is a negative correlation between the BMI and activity levels of the users which was the basis of our hypothesis that the the lower the weight of the users, the higher the activity level of that users. This led me to carry out further analysis to see the progression of different variables over time.</p>
 </section>
-<section id="reccommendation-and-limitations" class="level2">
-<h2 class="anchored" data-anchor-id="reccommendation-and-limitations">Reccommendation and Limitations</h2>
-<p>From this analysis, one apparent limitation is the small number of weight/BMI data recorded. It is clear that there is no motivation for users to record their weight/BMI and that is a key determinant of good health. It also aids in showing how much impact the activity the users have on their weight.</p>
+<section id="recommendations-and-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="recommendations-and-limitations">Recommendations and Limitations</h2>
+<p>one of the limitations observed is that although 33 users were supposed to be gotten, some dataset had less than 33 users observed.</p>
+<p>For instance, weightLogInfo_merged just had 8 users, sleepDay_merged had 24 users.</p>
+<p>From this analysis, one apparent limitation is the small number of weight/BMI data recorded.</p>
+<p><strong>recommendations</strong></p>
+<p>It is clear that there is no motivation for users to record their weight/BMI and that is a key determinant of good health. It also aids in showing how much impact the activity the users have on their weight. The analysis has also shown a correlation between the weight of the users and their activities</p>
+<p>One recommendation is for the company to prioritize users logging their weights by encouraging users to log their weights. This can be by making the logging process easier or by insensitive the logging process.</p>
 </section>
-<section id="conclusion-1" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion-1">Conclusion</h2>
-</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The dataset was validated and cleaned. An analysis was then done to get insights. Recommendations were made for the marketing team</p>
 </section>
 
 </main>
